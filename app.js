@@ -44,12 +44,14 @@ app.use(session({
 	saveUninitialized:false,
 	secret:"i am zhuliangxiong"
 }));
-app.use('/docs', express.static(path.join(__dirname, 'docs')));
-app.redirect('/docs', '/docs/index.html');
-app.redirect('/docs/', '/docs/index.html');
-app.redirect('/', '/docs/index.html');
-require('./user.js').attach(app);
-require('./product.js').attach(app);
+app.use('/html', express.static(path.join(__dirname, 'pubs')));
+app.redirect('/html', '/html/index.html');
+app.redirect('/html/', '/html/index.html');
+app.redirect('/', '/html/index.html');
+
+require('./api/moment.js')(app);
+require('./api/image.js')(app);
+require('./api/user.js')(app);
 
 http.createServer(app).listen(app.get('port'), function(error) {
 	if (error) {
