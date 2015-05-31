@@ -10,6 +10,17 @@ var options = {
 	multipleStatements : true
 };
 var pool = mysql.createPool(options);
+pool.on('connection', function (connection) {
+	connection.config.queryFormat = function (query, values) {
+		if (!values) return query;
+		return query.replace(/\:(\w+)/g, function (txt, key) {
+			if (values.hasOwnProperty(key)) {
+				return this.escape(values[key]);
+			}
+			return txt;
+		}.bind(this));
+	};
+});
 
 module.exports.query = function(sql, args) {
 	return new Promise(function(resolve, reject) {
