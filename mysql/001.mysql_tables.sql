@@ -1,4 +1,4 @@
-use wechat;
+
 drop table user;
 create table user(
 	userid bigint auto_increment primary key,

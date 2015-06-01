@@ -1,4 +1,4 @@
-use wechat;
+
 truncate table mime;
 insert into mime(mimeid,name) values(1,'text/plain');
 insert into mime(mimeid,name) values(2,'image/jpeg');

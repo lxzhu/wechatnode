@@ -34,7 +34,7 @@ function get_moment_comment_list(userid){
      +get_friends_sql
      +")"
   +"where m.userid=:userid or m.userid in ("
-    +get_friends_sql+")"
+    +get_friends_sql+")";
 
   mysqlp.query(sql,{userid:userid}).then(function (result) {
    resolve(result.rows);
@@ -46,10 +46,7 @@ function get_moment_comment_list(userid){
 
 function get_moment_user_list(userid){
   return new Promise(function(resolve,reject){
-    var sql="select * from user u "
-    +"where u.userid =:userid or u.userid in ("
-      
-      +")";
+    var sql="select mc.* from "
 });
 }
 
