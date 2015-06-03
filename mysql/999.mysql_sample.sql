@@ -32,6 +32,8 @@ insert into user(username,password,name,thumbnail_imageid,create_datetime)
 insert into user(username,password,name,thumbnail_imageid,create_datetime)
 	values('bill',md5('NPasswordOfBill'),'bill pink',5,current_timestamp());
 
+-- friends
+insert into friendship(from_userid,to_userid,create_datetime) values(1,2,current_timestamp());
 
 -- simple moment
 truncate table moment;

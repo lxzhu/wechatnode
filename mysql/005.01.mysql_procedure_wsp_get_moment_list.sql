@@ -31,15 +31,15 @@ join recent_moment rm where mc.momentid=rm.momentid and mc.userid=userid or mc.u
 
 #get related users
 create temporary table recent_moment_user
-select distinct u.* from user u
+select distinct u.userid,u.name,u.thumbnail_imageid from user u
 where u.userid =userid or u.userid in (
 	select rm.userid from recent_moment rm
 	union 
 	select rmc.userid from recent_moment_comment rmc
 );
 #select data from temporay table as result.
-select * from recent_moment;
-select * from recent_moment_comment;
+select * from recent_moment order by create_datetime desc, momentid desc;
+select * from recent_moment_comment order by create_datetime desc, commentid desc;
 select * from recent_moment_user;
 
 #drop temporary tables to release memory

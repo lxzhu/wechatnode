@@ -1,6 +1,11 @@
 var config = {
 	website : {},
-	settings : {},
+	
+	maxFileSize:2*1024*1024,
+	
+	paths:{
+		uploadImagePath:'store/images'
+	},
 	mysql : {
 		host : 'localhost',
 		port : '3306',
