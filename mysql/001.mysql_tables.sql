@@ -102,6 +102,13 @@ create table moment_comment(
 	parent_comment_userid bigint,
 	create_datetime datetime not null
 );
+drop table moment_image;
+create table moment_image(
+	momentid bigint not null,
+	mediaid bigint not null,
+	create_datetime datetime not null,
+	primary key (momentid,mendiaid)
+);
 drop table friendship;
 create table friendship(
 	friendshipid bigint auto_increment primary key,

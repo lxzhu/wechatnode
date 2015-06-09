@@ -3,7 +3,8 @@ var route=require('../route.js').create();
 var moment_dao=require('../dao/moment.js');
 var formidable=require('formidable');
 var async=require('async');
-
+var path=require('path');
+var fs=require('fs');
 module.exports=function(app){
 	route.attach(app);
 };
@@ -72,5 +73,45 @@ function add(req,res){
 	});
 }
 
+function attach(req,res){
+	var userid=req.cookies["WeChatUserID"];
+	var form=new formidable.IncomingForm();
+	form.encoding="utf-8";
+	form.multiples=true;    
+	form.uploadDir="/var/www/wechatnode/store/images";
+	form.parse(req,function(err,fields,files){
+		var momentid=parseInt(fields.momentid);
+		console.log("files",files);
+		var tasks=[];
+		function rename(file){
+
+			return function(callback){			
+				
+				var filedir=path.dirname(file.path);  
+				console.log("filedir",filedir);
+				console.log("filename",file.name);   	
+				var newpath=path.join(filedir,file.name);
+				fs.rename(file.path,newpath,callback);
+			};
+		}
+
+		for(var prop in files){
+			if(files.hasOwnProperty(prop)){
+				var file=files[prop];
+				tasks.push(rename(file));
+			}
+		}
+
+		async.parallel(tasks,function(err,result){
+			res.json({
+				status:"OK"
+			});
+		});
+
+
+	});
+}
+
 route.get('/moment/list',list);
 route.post('/moment/add',add);
+route.post('/moment/attach',attach);
